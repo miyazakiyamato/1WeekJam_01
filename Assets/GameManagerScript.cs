@@ -16,18 +16,22 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> goalsField;
     bool IsCleared()
     {
-        List<Vector2Int> goals = new List<Vector2Int>();
-        //
         for (int y = 0; y < map.GetLength(0); y++)
         {
             for (int x = 0; x < map.GetLength(1); x++)
             {
-                if (map[y, x] == 3)
+                if (map[y, x] == 1)
                 {
-                    goals.Add(new Vector2Int(x, y));
+                    GameObject f = field[y,x];
+                    if (f == null || f.tag == "Player")
+                    {
+                        
+                        return true;
+                    }
                 }
             }
         }
+        return false;
         //
         //for (int i = 0; i < goals.Count; i++)
         //{
@@ -37,8 +41,6 @@ public class GameManagerScript : MonoBehaviour
         //        return false;
         //    }
         //}
-
-        return true;
     }
     void Reset()
     {

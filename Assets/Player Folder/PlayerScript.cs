@@ -8,15 +8,24 @@ public class NewBehaviourScript : MonoBehaviour
 	public GameObject playerBulletPreFab;
 	[SerializeField]
 	private float speed;
+
+	private bool isClear = false;
 	private void OnCollisionEnter(Collision collision)
 	{
-		
+		if(collision.gameObject.tag == "Goal")
+		{
+			isClear = true;
+		}
     }
+	public bool IsClear()
+	{
+		return isClear;
+	}
 	// Start is called before the first frame update
 	void Start()
 	{
-	   
-	}
+        isClear = false;
+    }
 
 	// Update is called once per frame
 	void Update()
