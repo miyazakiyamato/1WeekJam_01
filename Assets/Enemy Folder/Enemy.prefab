@@ -12,11 +12,11 @@ GameObject:
   - component: {fileID: -5307355008380210701}
   - component: {fileID: 4590166222984447843}
   - component: {fileID: 3353711805590898991}
-  - component: {fileID: -650735723501840669}
   - component: {fileID: -5786946775342796188}
+  - component: {fileID: -6903234814763586238}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -121,7 +121,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!50 &-650735723501840669
+--- !u!114 &-5786946775342796188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7854740806403150460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 126f462676d6ce14e8ffc15368075b18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPreFab: {fileID: 1749512301608665622, guid: 6487e0aef4972c94b8dc28595279f093, type: 3}
+--- !u!50 &-6903234814763586238
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
@@ -129,7 +142,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7854740806403150460}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -147,17 +160,4 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &-5786946775342796188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7854740806403150460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 126f462676d6ce14e8ffc15368075b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shieldPreFab: {fileID: 1749512301608665622, guid: 6487e0aef4972c94b8dc28595279f093, type: 3}
+  m_Constraints: 4

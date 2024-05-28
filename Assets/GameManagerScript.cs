@@ -53,6 +53,7 @@ public class GameManagerScript : MonoBehaviour
         {
             Destroy(goalsField[i]);
         }
+        
         Start();
         clearText.SetActive(IsCleared());
     }
@@ -64,8 +65,8 @@ public class GameManagerScript : MonoBehaviour
         map = new int[,] {
             { 4,4,4,4,4,4,4,4,4,4,4},
             { 4,0,0,0,0,0,0,0,0,3,4},
-            { 4,1,0,0,0,2,0,0,5,0,4},
-            { 4,0,0,0,2,2,2,0,0,0,4},
+            { 4,1,0,0,0,2,0,0,0,0,4},
+            { 4,0,0,0,2,2,2,0,5,0,4},
             { 4,0,0,0,0,2,0,0,0,0,4},
             { 4,0,0,0,0,0,0,0,0,0,4},
             { 4,0,0,0,0,0,0,0,0,0,4},

@@ -19,14 +19,26 @@ public class PlayerBulletScript : MonoBehaviour
 	/// </summary>
 	/// <param name="collision"></param>
 	// Start is called before the first frame update
-	private void OnCollisionEnter(Collision collision)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if(collision != null && collision.collider.tag != "Player")
+		if(collision != null)
 		{
-			Destroy(gameObject);
-		}
+			if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerBullet")
+			{
+				return;
+            }
+            Destroy(gameObject);
+        }
 	}
-	void Start()
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerBullet")
+        {
+            return;
+        }
+        Destroy(gameObject);
+    }
+    void Start()
 	{
 		//è¡ñ≈Ç∑ÇÈÇ‹Ç≈ÇÃéûä‘Ç0.3ïbÇ∆Ç∑ÇÈ
 		lifeTime = 2.0f;

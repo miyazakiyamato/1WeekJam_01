@@ -9,13 +9,9 @@ public class EnemyShildScript : MonoBehaviour
     private float ct;
     private float leftCt;
     // Start is called before the first frame update
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-       
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        if (leftCt <= 0)
+        if (leftCt <= 0 && collision.gameObject.tag == "Player")
         {
             Instantiate(
                            bulletPreFab,
@@ -27,7 +23,7 @@ public class EnemyShildScript : MonoBehaviour
     }
     void Start()
     {
-        ct = 0.5f;
+        ct = 1.0f;
         leftCt = ct;
     }
 

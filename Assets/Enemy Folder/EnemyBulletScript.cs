@@ -15,10 +15,12 @@ public class EnemyBulletScript : MonoBehaviour
     // Start is called before the first frame update
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision != null && collision.collider.tag == "Player")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" ||
+            collision.gameObject.tag == "EnemyShield" || collision.gameObject.tag == "Goal")
         {
-            Destroy(gameObject);
+            return;
         }
+        Destroy(gameObject);
     }
     void Start()
     {
