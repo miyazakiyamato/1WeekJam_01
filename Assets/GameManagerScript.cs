@@ -136,7 +136,7 @@ public class GameManagerScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
               
-                Reset();
+               // Reset();
             }
 
         }
