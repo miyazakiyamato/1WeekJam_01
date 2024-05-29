@@ -6,10 +6,24 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject shieldPreFab;
     GameObject shield;
+    int hp = 3;
     // Start is called before the first frame update
+    public GameObject GetShield() {  return shield; }
     private void OnCollisionExit2D(Collision2D collision)
     {
         
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "PlayerBullet")
+        {
+            hp--;
+        }
+    }
+    public void EnemyDestroy()
+    {
+        Destroy(shield);
+        Destroy(gameObject);
     }
     void Start()
     {
@@ -24,6 +38,10 @@ public class EnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        shield.transform.position = transform.position;
+        if(hp < 0)
+        {
+            EnemyDestroy();
+        }
+        shield.GetComponent<EnemyShildScript>().SetEnemyPos(transform.position);
     }
 }

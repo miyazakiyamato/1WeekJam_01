@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
@@ -12,50 +13,46 @@ public class GameManagerScript : MonoBehaviour
     public GameObject clearText;
 
     int[,] map;
-    GameObject[,] field;
-    List<GameObject> goalsField;
-    bool IsCleared()
+    GameObject player;
+    GameObject goal;
+    List<GameObject> enemyList;
+    List<GameObject> boxList;
+    List<GameObject> noBreakBoxList;
+    public List<GameObject> GetEnemyList() {  return enemyList; }
+    public void SetEnemyShieldBlockPos(Vector3 pos)
     {
-        for (int y = 0; y < map.GetLength(0); y++)
+        for (int i = 0; i < GetComponent<GameManagerScript>().GetEnemyList().Count; i++)
         {
-            for (int x = 0; x < map.GetLength(1); x++)
+            if (enemyList[i].GetComponent<EnemyScript>().GetShield() != null)
             {
-                if (map[y, x] == 1)
-                {
-                    GameObject f = field[y,x];
-                    if (f == null || f.tag == "Player")
-                    {
-                        
-                        return true;
-                    }
-                }
+                enemyList[i].GetComponent<EnemyScript>().GetShield().GetComponent<EnemyShildScript>().SetBlockPos(pos);
             }
         }
+    }
+    bool IsCleared()
+    {
+        if(player != null && player.GetComponent<PlayerScript>().GetIsClear()) { return true; }
         return false;
-        //
-        //for (int i = 0; i < goals.Count; i++)
-        //{
-        //    GameObject f = field[goals[i].y, goals[i].x];
-        //    if (f == null || f.tag != "Player")
-        //    {
-        //        return false;
-        //    }
-        //}
     }
     void Reset()
     {
-        for (int y = 0; y < map.GetLength(0); y++)
+        Destroy(player);
+        Destroy(goal);
+        for (int i = 0; i < enemyList.Count; i++)
         {
-            for (int x = 0; x < map.GetLength(1); x++)
+            if(enemyList[i] != null)
             {
-                Destroy(field[y, x]);
+                enemyList[i].GetComponent<EnemyScript>().EnemyDestroy();
             }
         }
-        for (int i = 0; i < goalsField.Count; i++)
+        for (int i = 0; i < boxList.Count; i++)
         {
-            Destroy(goalsField[i]);
+            Destroy(boxList[i]);
         }
-        
+        for (int i = 0; i < noBreakBoxList.Count; i++)
+        {
+            Destroy(noBreakBoxList[i]);
+        }
         Start();
         clearText.SetActive(IsCleared());
     }
@@ -76,8 +73,9 @@ public class GameManagerScript : MonoBehaviour
             { 4,4,4,4,4,4,4,4,4,4,4},
             };
 
-        field = new GameObject[map.GetLength(0), map.GetLength(1)];
-        goalsField = new List<GameObject>();
+        enemyList = new List<GameObject>();
+        boxList = new List<GameObject>();
+        noBreakBoxList = new List<GameObject>();
 
         for (int y = 0; y < map.GetLength(0); y++)
         {
@@ -85,7 +83,7 @@ public class GameManagerScript : MonoBehaviour
             {
                 if (map[y, x] == 1)
                 {
-                    field[y, x] = Instantiate(
+                    player = Instantiate(
                         playerPreFab,
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0),
                         Quaternion.identity
@@ -93,35 +91,36 @@ public class GameManagerScript : MonoBehaviour
                 }
                 if (map[y, x] == 2)
                 {
-                    field[y, x] = Instantiate(
+                    boxList.Add(Instantiate(
                         boxPreFab,
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0),
                         Quaternion.identity
-                        );
+                        ));
+                    boxList[boxList.Count - 1].GetComponent<BlockScript>().SetEnemy(enemyList);
                 }
                 if (map[y, x] == 3)
                 {
-                    goalsField.Add(Instantiate(
+                    goal = Instantiate(
                         goalPreFab,
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0.01f),
                         Quaternion.identity
-                        ));
+                        );
                 }
                 if (map[y, x] == 4)
                 {
-                    field[y, x] = Instantiate(
+                    noBreakBoxList.Add(Instantiate(
                         noBreakBoxPreFab,
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0),
                         Quaternion.identity
-                        );
+                        ));
                 }
                 if (map[y, x] == 5)
                 {
-                    field[y, x] = Instantiate(
+                    enemyList.Add(Instantiate(
                         enemyPreFab,
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0),
                         Quaternion.identity
-                        );
+                        ));
                 }
             }
         }
@@ -132,14 +131,17 @@ public class GameManagerScript : MonoBehaviour
     {
         if (!IsCleared())
         {
-           
+            if (player != null && player.GetComponent<PlayerScript>().GetIsDed())
+            {
+                Reset();
+            }
         }
         else
         {
+            clearText.SetActive(true);
             if (Input.GetKeyDown(KeyCode.Space))
             {
-              
-               // Reset();
+               Reset();
             }
 
         }

@@ -22,6 +22,15 @@ public class EnemyBulletScript : MonoBehaviour
         }
         Destroy(gameObject);
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "EnemyBullet" ||
+           collision.gameObject.tag == "EnemyShield" || collision.gameObject.tag == "Goal")
+        {
+            return;
+        }
+        Destroy(gameObject);
+    }
     void Start()
     {
         //è¡ñ≈Ç∑ÇÈÇ‹Ç≈ÇÃéûä‘Ç0.3ïbÇ∆Ç∑ÇÈ
