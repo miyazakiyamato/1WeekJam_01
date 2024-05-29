@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerBulletScript : MonoBehaviour
 {
+	Rigidbody rb;
 	//消滅するまでの時間
 	private float lifeTime;
 	//消滅するまでの残り時間
@@ -18,19 +19,12 @@ public class PlayerBulletScript : MonoBehaviour
 	//private Vector3 defaultScale;
 	/// </summary>
 	/// <param name="collision"></param>
-	// Start is called before the first frame update
-	private void OnCollisionEnter2D(Collision2D collision)
+	public void SetVelocity(Vector3 velocity)
 	{
-		if(collision != null)
-		{
-			if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerBullet")
-			{
-				return;
-            }
-            Destroy(gameObject);
-        }
+		this.velocity = velocity;
 	}
-    private void OnTriggerStay2D(Collider2D collision)
+	// Start is called before the first frame update
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "PlayerBullet")
         {
@@ -53,9 +47,8 @@ public class PlayerBulletScript : MonoBehaviour
 		//    Random.Range(-maxVelocity, maxVelocity),
 		//    Random.Range(-maxVelocity, maxVelocity),
 		//    0);
-		velocity = Vector3.Normalize(Input.mousePosition - new Vector3(Screen.width / 2,Screen.height / 2,0) - transform.position) * speed;
-		
-	}
+		//velocity = Vector3.zero;
+    }
 
 	// Update is called once per frame
 	void Update()
@@ -63,7 +56,7 @@ public class PlayerBulletScript : MonoBehaviour
 		//残り時間をカウントダウン
 		leftLifeTime -= Time.deltaTime;
 		//自身の座標を移動
-		transform.position += velocity * Time.deltaTime;
+		transform.position += velocity * Time.deltaTime * speed;
 		//残り時価が0以下になったら自身のゲームオブジェクトを削除
 		if (leftLifeTime <= 0) { Destroy(gameObject); }
 	}

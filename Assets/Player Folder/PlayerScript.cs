@@ -3,23 +3,39 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
 	public GameObject playerBulletPreFab;
 	[SerializeField]
 	private float speed;
+	private Vector3 velocity;
+	GameObject bullet;
+	int hp = 5;
 
-	private bool isClear = false;
-	private void OnCollisionEnter(Collision collision)
+    private bool isClear = false;
+	private bool isDed = false;
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if(collision.gameObject.tag == "Goal")
 		{
 			isClear = true;
 		}
+
     }
-	public bool IsClear()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "EnemyBullet")
+		{
+			hp--;
+		}
+    }
+    public bool GetIsClear()
 	{
 		return isClear;
+	}
+	public bool GetIsDed()
+	{
+		return isDed;
 	}
 	// Start is called before the first frame update
 	void Start()
@@ -30,6 +46,11 @@ public class NewBehaviourScript : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if(hp < 0)
+		{
+			isDed = true;
+		}
+
 		Vector2 direction = new Vector2(0, 0);
 		if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 		{
@@ -48,16 +69,18 @@ public class NewBehaviourScript : MonoBehaviour
             direction.y = -1.0f;
         }
 		float ruto = math.length(direction);
-		if (ruto > 0) {
-			transform.position += (new Vector3(direction.x,direction.y, 0) / ruto * Time.deltaTime * speed);
+        if (ruto > 0) {
+            velocity = (new Vector3(direction.x, direction.y, 0) / ruto);
+            transform.position += velocity * Time.deltaTime * speed;
 		}
 		if (Input.GetKeyDown(KeyCode.Space))
 		{
-            Instantiate(
+            bullet = Instantiate(
                         playerBulletPreFab,
-                        new Vector3(transform.position.x,transform.position.y,0),
+                        new Vector3(transform.position.x,transform.position.y,0) + velocity * Time.deltaTime * speed,
                         Quaternion.identity
                         );
+			bullet.GetComponent<PlayerBulletScript>().SetVelocity(velocity);
         }
 	}
 }
