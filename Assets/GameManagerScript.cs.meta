@@ -4,11 +4,11 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - playerPreFab: {fileID: 3855462753837199792, guid: 627b19f6235995544a1b202934479a91, type: 3}
-  - boxPreFab: {fileID: 7038357692626326067, guid: f960728eea7073b46aef677c7649a46f, type: 3}
-  - noBreakBoxPreFab: {fileID: 4997880107926184825, guid: 3bb632e069e6c1844a5612b55fb5fa36, type: 3}
-  - enemyPreFab: {fileID: 7854740806403150460, guid: 773dec9e748bf8541bf48cae7a08cfe6, type: 3}
-  - goalPreFab: {fileID: 3176766767414280155, guid: fb373dac6f9ed0d42a7c8ee25441464f, type: 3}
+  - playerPreFab: {instanceID: 0}
+  - boxPreFab: {instanceID: 0}
+  - noBreakBoxPreFab: {instanceID: 0}
+  - enemyPreFab: {instanceID: 0}
+  - goalPreFab: {instanceID: 0}
   - clearText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}

@@ -11,7 +11,11 @@ public class EnemyBulletScript : MonoBehaviour
     //移動量
     [SerializeField]
     private float speed;
-    private Vector3 velocity;
+    private Vector3 velocity = Vector3.zero;
+    public void SetVelocity(Vector3 velocity)
+    {
+        this.velocity = velocity;
+    }
     // Start is called before the first frame update
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -37,7 +41,6 @@ public class EnemyBulletScript : MonoBehaviour
         lifeTime = 2.0f;
         //残り時間を初期化
         leftLifeTime = lifeTime;
-        velocity = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -46,7 +49,7 @@ public class EnemyBulletScript : MonoBehaviour
         //残り時間をカウントダウン
         leftLifeTime -= Time.deltaTime;
         //自身の座標を移動
-        transform.position += velocity * Time.deltaTime;
+        transform.position += velocity * Time.deltaTime * speed;
         //残り時価が0以下になったら自身のゲームオブジェクトを削除
         if (leftLifeTime <= 0) { Destroy(gameObject); }
     }

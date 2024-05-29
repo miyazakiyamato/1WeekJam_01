@@ -6,9 +6,11 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject shieldPreFab;
     GameObject shield;
+    private GameObject player;
     int hp = 3;
     // Start is called before the first frame update
     public GameObject GetShield() {  return shield; }
+    public void SetPlayer(GameObject player) { this.player = player; }
     private void OnCollisionExit2D(Collision2D collision)
     {
         
@@ -22,6 +24,7 @@ public class EnemyScript : MonoBehaviour
     }
     public void EnemyDestroy()
     {
+        shield.GetComponent<EnemyShildScript>().BulletDestroy();
         Destroy(shield);
         Destroy(gameObject);
     }
@@ -33,6 +36,7 @@ public class EnemyScript : MonoBehaviour
                            new Vector3(transform.position.x, transform.position.y, 0),
                            Quaternion.identity
                            );
+        shield.GetComponent<EnemyShildScript>().SetPlayer(player);
     }
 
     // Update is called once per frame

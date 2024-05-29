@@ -7,7 +7,8 @@ using UnityEngine.UIElements.Experimental;
 public class EnemyShildScript : MonoBehaviour
 {
     public GameObject bulletPreFab;
-
+    private GameObject bullet;
+    private GameObject player;
     //Š®—¹‚Ü‚Å‚É‚©‚©‚éŽžŠÔ
     private float timeTaken = 2.0f;
     //Œo‰ßŽžŠÔ
@@ -18,6 +19,11 @@ public class EnemyShildScript : MonoBehaviour
     private Vector3 enemyPos;
     private Vector3 blockPos;
     bool isBlockMove = false;
+    public void BulletDestroy()
+    {
+        Destroy(bullet);
+    }
+    public void SetPlayer(GameObject player) {  this.player = player; }
     public void SetEnemyPos(Vector3 pos)
     {
         enemyPos = pos;
@@ -35,11 +41,13 @@ public class EnemyShildScript : MonoBehaviour
     {
         if (leftCt <= 0 && collision.gameObject.tag == "Player")
         {
-            Instantiate(
+            bullet = Instantiate(
                            bulletPreFab,
                            new Vector3(transform.position.x, transform.position.y, 0),
                            Quaternion.identity
                            );
+            Vector3 velocity = (player.transform.position - transform.position).normalized;
+            bullet.GetComponent<EnemyBulletScript>().GetComponent<EnemyBulletScript>().SetVelocity(velocity);
             leftCt = ct;
         }
     }
