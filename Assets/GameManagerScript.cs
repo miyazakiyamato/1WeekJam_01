@@ -18,6 +18,7 @@ public class GameManagerScript : MonoBehaviour
     List<GameObject> enemyList;
     List<GameObject> boxList;
     List<GameObject> noBreakBoxList;
+    public GameObject GetPlayer () { return player; }
     public List<GameObject> GetEnemyList() {  return enemyList; }
     public void SetEnemyShieldBlockPos(Vector3 pos)
     {
@@ -121,6 +122,7 @@ public class GameManagerScript : MonoBehaviour
                         new Vector3(x - map.GetLength(1) / 2, -y + map.GetLength(0) / 2, 0),
                         Quaternion.identity
                         ));
+                    enemyList[enemyList.Count - 1].GetComponent<EnemyScript>().SetPlayer(player);
                 }
             }
         }
