@@ -37,6 +37,11 @@ public class FadeSceneLoader : MonoBehaviour
         }
     }
 
+    public void CallCoroutine()
+    {
+        StartCoroutine(FadeOutAndLoadScene());
+    }
+
     public IEnumerator FadeOutAndLoadScene()
     {
         // ƒpƒlƒ‹‚ð—LŒø‰»

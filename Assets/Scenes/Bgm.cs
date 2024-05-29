@@ -10,9 +10,6 @@ public class Bgm : MonoBehaviour
     void Start()
     {
 
-        //画面遷移してもオブジェクトが壊れないようにする
-        DontDestroyOnLoad(this);
-
     }
 
     // Update is called once per frame

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManagerScript : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class GameManagerScript : MonoBehaviour
     public GameObject enemyPreFab;
     public GameObject goalPreFab;
     public GameObject clearText;
+    public FadeSceneLoader fadeSceneLoader;
+    // éüÇÃÉVÅ[ÉìÇÃïœêî
+    public string nextSceneName;
+    public string nextSceneName2;
 
     int[,] map;
     GameObject player;
@@ -64,13 +69,13 @@ public class GameManagerScript : MonoBehaviour
 
         map = new int[,] {
             { 4,4,4,4,4,4,4,4,4,4,4},
-            { 4,0,0,0,0,0,0,0,0,3,4},
-            { 4,1,0,0,0,2,0,0,0,0,4},
-            { 4,0,0,0,2,2,2,0,5,0,4},
-            { 4,0,0,0,0,2,0,0,0,0,4},
-            { 4,0,0,0,0,0,0,0,0,0,4},
-            { 4,0,0,0,0,0,0,0,0,0,4},
-            { 4,0,0,0,0,0,0,0,0,0,4},
+            { 4,0,0,0,2,2,0,0,0,3,4},
+            { 4,0,0,0,2,2,0,0,0,0,4},
+            { 4,0,0,0,2,2,0,0,5,0,4},
+            { 4,0,0,0,2,2,0,0,0,0,4},
+            { 4,0,0,0,2,2,0,0,0,0,4},
+            { 4,1,0,0,2,2,0,0,0,0,4},
+            { 4,0,0,0,2,2,2,2,2,2,4},
             { 4,4,4,4,4,4,4,4,4,4,4},
             };
 
@@ -135,16 +140,12 @@ public class GameManagerScript : MonoBehaviour
         {
             if (player != null && player.GetComponent<PlayerScript>().GetIsDed())
             {
-                Reset();
+                SceneManager.LoadScene(nextSceneName2);
             }
         }
         else
         {
-            clearText.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-               Reset();
-            }
+            SceneManager.LoadScene(nextSceneName);
 
         }
         if (Input.GetKeyDown(KeyCode.R))
